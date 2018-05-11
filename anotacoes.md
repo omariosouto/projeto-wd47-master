@@ -64,5 +64,59 @@
 
 ```
 
-# 19) Criando cartões de forma feliz
+# 19.1) Criando cartões de forma feliz 
 - Ter o texto
+
+
+# 19) Criando cartões com Juqueri (Capitulo 19)
+- Fazer o cartão aparecer na tela usando jquery
+- Não precisa fazer os eventos funcionarem ainda
+- Trocar **todos** os `addEventListener` por `on`
+
+# 20)   Migrando os eventos
+- Testa um evento de cada vez para não dar ruim :)
+- Para converter elemento puro para jquery $(elementoPuro)
+- addEventListener === on
+- classList.add === addClass
+
+# 21) Botão de ajudas
+- For of é legal mas forEach é sensação
+- Lista de ajudas com alert
+- Array-like não é array (NodeList vs Array)
+
+# 22) Instruçoes em forma de cartão
+
+# 23) Module Pattern
+- Exportando funçoes pra window de dentro da IIFE
+
+# 23.3) Organização [Bônus]
+- Curto circuito do JavaScript 
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Operadores_Logicos
+```js
+// Tornando coisas Globais
+window.mural = window.mural || {}
+window.mural.adicionaCartaozinhoNoMural = adicionaCartaozinhoNoMural
+```
+# 23.4) Dependência de IIFE [Bônus]
+- Ajuda a garantir a ordem dos scriptss
+```js
+(function($) { // Mapeia o jQuery para $
+
+    // a gente acessa $ sem medo de sobreescrita
+
+})(jQuery) // Recebe o jQuery
+```
+
+# 24) JavaScript Moderno no Passado
+- TC39: https://github.com/tc39
+- Especificação é o Ecma Script - ECMA262;
+- JavaScript, Action Script (Flash, PhotoShop, After Effects);
+- ES6 
+- NPM para baixar bibliotecas
+- Babel
+
+# 24.1) NPM Scripts
+
+# 25) Ajax das Ajudas
+- https://httpstatusdogs.com/
+- AJAX = Async JavaScript And XML (AJAJ JSON)

@@ -1,3 +1,5 @@
+(function() {
+
 const btn = document.querySelector('#btnMudaLayout')
 
 btn.addEventListener('click', mudaConteudoDoBotao) // CallBack
@@ -32,3 +34,4 @@ function mudaLayout() {
 btn.classList.remove('no-js')
 
 
+})()
