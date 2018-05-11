@@ -116,7 +116,15 @@ window.mural.adicionaCartaozinhoNoMural = adicionaCartaozinhoNoMural
 - Babel
 
 # 24.1) NPM Scripts
+- Cria comando de dev com o comando do babel pra facilitar o rolê;
 
 # 25) Ajax das Ajudas
-- https://httpstatusdogs.com/
-- AJAX = Async JavaScript And XML (AJAJ JSON)
+- Status do HTTP: https://httpstatusdogs.com/
+- É só um conceito: AJAX = Async JavaScript And XML (AJAJ JSON)
+- JSON === Objeto do JavaScript em texto
+
+# 26) Salvando cartões com Ajaj
+
+- Como extrai o Texto e a Cor dos cartões?;
+- Pelas proprieddes: textContent, css('background-color')/style.backgroundColor
+- Mandar as infos do cartão e o **usuario dono delas**
