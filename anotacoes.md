@@ -128,3 +128,23 @@ window.mural.adicionaCartaozinhoNoMural = adicionaCartaozinhoNoMural
 - Como extrai o Texto e a Cor dos cartões?;
 - Pelas proprieddes: textContent, css('background-color')/style.backgroundColor
 - Mandar as infos do cartão e o **usuario dono delas**
+
+- Pega os cartões com forEach
+- Vai no map que é menos código
+
+
+# 27) PEgando cartao
+- Cors = Cross Origin Resource Sharing
+- Dinâmica do cors;
+
+# Extras
+- Desafio de JavaScript: https://www.javascript30.com/
+- Debounce e Throttle: https://css-tricks.com/debouncing-throttling-explained-examples/
+- Joguinho pra Aprender JS: https://warrior.js.org/docs/en/overview.html
+
+## CollabCode 
+- Videos 
+- Posts
+- Eventos gratuitos com cerveja de graça 
+- @omariosouto
+- Mandei minha palestra pra braziljs

@@ -2,8 +2,67 @@
 ;(function() {
     'use strict';
 
-let contador = document.querySelectorAll('.cartao').length
 
+// Pega as infos do mural
+
+
+$.ajax({
+    url:"http://ceep.herokuapp.com/cartoes/carregar?usuario=omariosouto&callback=?",
+    dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+    success:function(json){
+        // do stuff with json (in this case an array)
+        json.cartoes.forEach(function(cartaoDaVoltaAtual) {
+            adicionaCartaozinhoNoMural(cartaoDaVoltaAtual)
+        })
+
+    },
+    error:function(){
+        alert("Error");
+    }      
+});
+// Pega as infos do mural /fim
+
+function sincronizar() {
+    const $btnSync = $('#btnSync')
+    const infosDoMural = {
+        usuario: 'omariosouto',
+        cartoes: Array.from($('.cartao')).map( function(elementoAtual) {
+        
+            // Da um salve \o/ https://sistema.caelum.com.br/avaliacao/a4da79f
+            const conteudoDoCartao = elementoAtual.querySelector('p').innerHTML
+                                                                     .replace(/<div>/g, '') 
+                                                                     .replace(/<\/div>/g, '') 
+            console.log(conteudoDoCartao)
+            return {
+                    conteudo: conteudoDoCartao,
+                    cor: elementoAtual.style.backgroundColor
+                   }
+        } ) // Retorna o Arrayzinho de Objetinhos prontinhos :)
+    }
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', 'http://ceep.herokuapp.com/cartoes/salvar')
+    xhr.setRequestHeader('Content-type', 'application/json')
+    xhr.send(JSON.stringify(infosDoMural))
+
+    $btnSync.removeClass('botaoSync--sincronizado')
+    $btnSync.removeClass('botaoSync--deuRuim')
+    $btnSync.addClass('botaoSync--esperando')
+
+    xhr.addEventListener('load', function() {
+        $btnSync.addClass('botaoSync--sincronizado')
+        $btnSync.removeClass('botaoSync--esperando')
+        console.log(xhr.response)
+    })
+
+    xhr.addEventListener('error', function() {
+        $btnSync.addClass('botaoSync--deuRuim')
+        $btnSync.removeClass('botaoSync--esperando')
+    })
+}
+
+
+
+let contador = document.querySelectorAll('.cartao').length
 
 function adicionaCartaozinhoNoMural(cartaoObj) {
     // # Desafio
@@ -26,7 +85,7 @@ function adicionaCartaozinhoNoMural(cartaoObj) {
             <svg><use xlink:href="#iconeRemover"></use></svg>
             </button>
     
-            <input type="radio" name="corDoCartao${contador}" value="#EBEF40" id="corPadrão-cartao${contador}" class="opcoesDoCartao-radioTipo" checked>
+            <input type="radio" name="corDoCartao${contador}" value="#EBEF40" id="corPadrão-cartao${contador}" class="opcoesDoCartao-radioTipo">
             <label for="corPadrão-cartao${contador}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #EBEF40;" tabindex="0">
             Padrão
             </label>
@@ -79,14 +138,25 @@ function adicionaCartaozinhoNoMural(cartaoObj) {
     })
 
     cartao.on('keypress', function(propriedadesDoEvento) {
-        console.log(event)
         const isOpcoesDoCartao = propriedadesDoEvento.target.classList.contains('opcoesDoCartao-opcao')
-
+        
         if(isOpcoesDoCartao && (propriedadesDoEvento.key == 'Enter' || propriedadesDoEvento.key == ' ') )  {
             console.log('Força o click')
             // console.log('Apertaram ua tecla', propriedadesDoEvento)
             propriedadesDoEvento.target.click()
             // Disparar os bagulhos
+        }
+
+        const isCartaoConteudo = propriedadesDoEvento.target.classList.contains('cartao-conteudo')
+
+        if(isCartaoConteudo) {
+            //  Design Pattern - Debounce
+            clearInterval(window.intervaloDigitacao)
+            window.intervaloDigitacao = setTimeout(function() {
+                console.log('Teste')
+                window.mural.sincronizar()
+            }, 1000)
+
         }
     })
 
@@ -100,6 +170,7 @@ function adicionaCartaozinhoNoMural(cartaoObj) {
             cartao.addClass('cartao--some')
             cartao.on('transitionend', function () {
                 cartao.remove()
+                window.mural.sincronizar()
                 console.log('Cartao removeu', cartao)
             })    
         } 
@@ -111,5 +182,7 @@ function adicionaCartaozinhoNoMural(cartaoObj) {
 // Tornando coisas Globais
 window.mural = window.mural || {}
 window.mural.adicionaCartaozinhoNoMural = adicionaCartaozinhoNoMural
+window.mural.sincronizar = sincronizar
+
 
 })()
